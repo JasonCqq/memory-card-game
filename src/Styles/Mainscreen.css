@@ -1,3 +1,9 @@
+.main-background {
+    background-color: #192428;
+    height: 100vh;
+}
+
+
 .main{
     height: 100vh;
     width: 100%;
@@ -19,14 +25,34 @@ header{
     width: 80%;
 }
 
+.description-text{
+    color: white;
+}
+
 button {
     width: 35%;
+    background-color: #434C5D;
+    border: none;
+}
+
+button:hover{
+    border: 2px solid white;
+}
+
+h1 {
+    color: #FCA311;
 }
 
 h5 {
-    color: red;
+    background: linear-gradient(to right, #ef5350, #f48fb1, #7e57c2, #2196f3, #26c6da, #43a047, #eeff41, #f9a825, #ff5722);
+    background-clip: text;
+    color: transparent;
+}
+
+h6 {
+    color: white;
 }
 
 small {
-    color: blue;
+    color: white;
 }

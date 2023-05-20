@@ -36,9 +36,8 @@ function Game(){
             }
 
             if(i.clicked === false){
-                                shuffle(dogs);
+                shuffle(dogs);
                 setDogs(prevDogs => prevDogs.map(dog => dog.name === i.name ? {...dog, clicked: true} : dog));
-                console.log(i);
             } else if(i.clicked === true){
                 if(bestScore <= currentScore){
                     setBestScore(currentScore);
@@ -55,7 +54,6 @@ function Game(){
     }
 
     const shuffle = (array) => {
-        console.log(array);
         let currentIndex = array.length, tempValue, randomIndex;
         while (currentIndex !== 0) {
             randomIndex = Math.floor(Math.random() * array.length);
@@ -64,7 +62,6 @@ function Game(){
             array[currentIndex] = array[randomIndex];
             array[randomIndex] = tempValue;
         }
-        console.log(array);
         setDogs(array);
       }
 
@@ -112,7 +109,7 @@ function Game(){
     }
     
     return (
-        <div>
+        <div className="main-background">
             <nav>
                 <h2><u>- LEVEL {level} -</u></h2>
             </nav>
