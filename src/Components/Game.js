@@ -1,30 +1,56 @@
 import React, {useEffect, useState} from "react";
 import '@picocss/pico';
-import '../Styles/Game.css'
+import '../Styles/Game.css';
+import uniqid from 'uniqid';
 
 function Game(){
+    const [level, setLevel] = useState(3);
+    const [progress, setProgress] = useState(0);
+
+    const [dogs, setDogs] = useState([]);
+    const [dogsImage, setDogsImage] = useState([]);
+
     const randomKey = (list) => {
         const keys = Object.keys(list);
         const randomIndex = Math.floor(Math.random() * keys.length);
-        console.log(keys[randomIndex]);
         return keys[randomIndex];
     }
-
-    const getDogImages = (amount) => {
-        fetch("https://dog.ceo/api/breeds/list/all")
-        .then(response => response.json())
+    const getImageOfDog = (breed) => {
+        fetch(`https://dog.ceo/api/breed/${breed}/images`)
+        .then(res => res.json())
         .then(data => {
-            for(let i = 0; i < amount; i++){
-                let dogArray = [];
-                dogArray.push(randomKey(data.message));
-            }
+            setDogsImage(prevDogsImage => [...prevDogsImage, data.message[randomKey(data.message)]]);
         })
     }
 
-    console.log(getDogImages(5));
+    useEffect(() => {
+        const getDogs = () => {
+            let dogArray = [];
+            fetch("https://dog.ceo/api/breeds/list/all")
+            .then(response => response.json())
+            .then(data => {
+                for(let i = 0; i < level; i++){
+                    dogArray.push(randomKey(data.message));
+                }
+                setDogs(dogArray);
+            })
+        }
+        getDogs();
+    }, [level]);
 
-    const [level, setLevel] = useState(1);
-    const [progress, setProgress] = useState(0);
+    useEffect(() => {
+        dogs.forEach(dog => getImageOfDog(dog));
+    }, [dogs])
+
+    const renderDogImages = dogs.map((dog) => {
+        return(
+            <div className="dogBox" key={uniqid()}>
+                <img height="200px" width="200px" src={dogsImage[dogs.indexOf(dog)]}></img>
+                <p className="dogName">{dog}</p>
+            </div>
+        ); 
+    });
+    
 
     return (
         <div>
@@ -34,7 +60,7 @@ function Game(){
 
             <section>
                 <div id="gameBoard">
-
+                    <div>{renderDogImages}</div>
                 </div>
             </section>
 
