@@ -12,10 +12,11 @@ function Mainscreen({startButtonClick}){
 
             <div className="description">
                 <h6>The game starts with randomized dog images and you cannot click on the same 
-                    dog image twice. The game progressively gets more difficult each level.</h6>
+                    dog image twice. The game gets progressively more difficult each level.</h6>
                 <h5>Test your memory!!!</h5>
             </div>
             <button onClick={startButtonClick}>Get Started</button>
+
         </div>
     )
 }

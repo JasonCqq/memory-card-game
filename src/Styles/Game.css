@@ -1,0 +1,37 @@
+#bestScore {
+    color: green;
+}
+
+progress{
+    width: 75%;
+}
+
+#gameBoard{
+    height: 50vh;
+    width: 85%;
+    box-shadow: 0px 0px 4px 4px rgb(0 0 0 / 35%);
+    margin: auto;
+}
+
+.scores {
+    display: flex;
+    justify-content: center;
+    gap: 5vh;
+}
+
+h2 {
+    width: 100%;
+    text-align: center;
+    color: green;
+    padding-top: 5vh;
+    letter-spacing: 3px;
+    text-shadow: 1px 1px 1px black;
+}
+
+footer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
