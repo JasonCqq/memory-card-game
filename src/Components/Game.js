@@ -19,27 +19,54 @@ function Game(){
                 counter++;
             }
         }
-        if(counter === dogs.length){
+        if(counter === dogs.length - 1){
             setLevel(level + 1);
             setCurrentScore(currentScore + 1);   
         } else {
-            setProgress(counter);
+            setProgress(counter + 1);
             setCurrentScore(currentScore + 1);
         }
     }
 
     const returnDogName = (e) => {
-        console.log(e.target.nextSibling.textContent);
+        let skip = false;
         for(const i of dogs){
-            if(i.name === String(e.target.nextSibling.textContent) && i.clicked === false){
-                i.clicked = true;
-            } else if(i.name === String(e.target.nextSibling.textContent) && i.clicked === true){
-                bestScore < currentScore ? setBestScore(currentScore) : null;
+            if(i.name !== String(e.target.nextSibling.textContent)){
+                continue;
+            }
+
+            if(i.clicked === false){
+                                shuffle(dogs);
+                setDogs(prevDogs => prevDogs.map(dog => dog.name === i.name ? {...dog, clicked: true} : dog));
+                console.log(i);
+            } else if(i.clicked === true){
+                if(bestScore <= currentScore){
+                    setBestScore(currentScore);
+                }
+                setCurrentScore(0);
+                skip = true;
                 setLevel(1);
             } 
         }
-        updateGameStatus();
+
+        if(skip === false){
+            updateGameStatus();
+        }
     }
+
+    const shuffle = (array) => {
+        console.log(array);
+        let currentIndex = array.length, tempValue, randomIndex;
+        while (currentIndex !== 0) {
+            randomIndex = Math.floor(Math.random() * array.length);
+            currentIndex -= 1;
+            tempValue = array[currentIndex];
+            array[currentIndex] = array[randomIndex];
+            array[randomIndex] = tempValue;
+        }
+        console.log(array);
+        setDogs(array);
+      }
 
     const randomKey = (list) => {
         const keys = Object.keys(list);
@@ -54,33 +81,6 @@ function Game(){
         })
     }
 
-    // function shuffle(array) {
-    //     let currentIndex = array.length,  randomIndex;
-      
-    //     // While there remain elements to shuffle.
-    //     while (currentIndex != 0) {
-      
-    //       // Pick a remaining element.
-    //       randomIndex = Math.floor(Math.random() * currentIndex);
-    //       currentIndex--;
-      
-    //       // And swap it with the current element.
-    //       [array[currentIndex], array[randomIndex]] = [
-    //         array[randomIndex], array[currentIndex]];
-    //     }
-      
-    //     return array;
-    //   }
-      
-    //   // Used like so
-    //   var arr = [2, 11, 37, 42];
-    //   shuffle(arr);
-    //   console.log(arr);
-
-    useEffect(() => {
-        setCurrentScore(0);
-    }, [bestScore])
-
     useEffect(() => {
         const getDogs = () => {
             let dogArray = [];
@@ -93,7 +93,6 @@ function Game(){
                     getImageOfDog(dogObject);
                     dogArray.push(dogObject);
                 }
-                console.log(dogArray);
                 setDogs(dogArray);
             })
         }
